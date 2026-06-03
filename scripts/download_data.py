@@ -104,7 +104,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="Download North American monthly station files."
     )
-    parser.add_argument("--out", default="data/raw", help="Output directory for raw data")
+    parser.add_argument("--out", default="/Volumes/adessler_lab/GHCND/monthly_data/raw", help="Output directory for raw data")
     parser.add_argument(
         "--station-list",
         help="File with station IDs (one per line); if omitted, downloads all stations",
@@ -127,7 +127,7 @@ def main() -> None:
         print(f"  found {len(station_ids):,} stations")
 
     provenance = download_northam(out_dir, station_ids, args.workers)
-    save_provenance(provenance, out_dir.parent / "processed")
+    save_provenance(provenance, Path("/Volumes/adessler_lab/GHCND/monthly_data/processed"))
     print("Done.")
 
 

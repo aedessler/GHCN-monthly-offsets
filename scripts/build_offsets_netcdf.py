@@ -190,8 +190,8 @@ def build_netcdf(df: pd.DataFrame, out_path: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Build monthly offset NetCDF.")
-    parser.add_argument("--raw-dir", default="data/raw")
-    parser.add_argument("--out", default="data/processed/monthly_offsets.nc")
+    parser.add_argument("--raw-dir", default="/Volumes/adessler_lab/GHCND/monthly_data/raw")
+    parser.add_argument("--out", default="/Volumes/adessler_lab/GHCND/monthly_data/processed/monthly_offsets.nc")
     args = parser.parse_args()
 
     df = build_dataframe(Path(args.raw_dir))

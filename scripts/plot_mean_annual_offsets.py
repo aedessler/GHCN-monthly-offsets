@@ -16,7 +16,7 @@ import xarray as xr
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Plot mean annual adjustment offsets.")
-    parser.add_argument("--nc", default="data/processed/monthly_offsets.nc")
+    parser.add_argument("--nc", default="/Volumes/adessler_lab/GHCND/monthly_data/processed/monthly_offsets.nc")
     parser.add_argument("--out", default="mean_annual_offsets.png")
     parser.add_argument(
         "--min-stations", type=int, default=100,

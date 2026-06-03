@@ -1,12 +1,12 @@
 # North American Monthly Temperature Adjustment Offsets
 
-This pipeline downloads North American monthly station temperature data from NOAA/NCEI and computes monthly adjustment offsets (FLs.52j homogenized minus raw) for TMAX and TMIN, stored in a NetCDF file.
+This pipeline downloads North American monthly GHCN temperature data from NOAA/NCEI and computes monthly adjustment offsets (FLs.52j homogenized minus raw) for TMAX and TMIN, stored in a NetCDF file.
 
 ![Mean annual offsets](mean_annual_offsets.png)
 
 ## Output
 
-`data/processed/monthly_offsets.nc` — a NetCDF file with dimensions `(station, time)`:
+`/Volumes/adessler_lab/GHCND/monthly_data/processed/monthly_offsets.nc` — a NetCDF file with dimensions `(station, time)`:
 
 | Variable | Dimensions | Description |
 |----------|-----------|-------------|
@@ -39,26 +39,28 @@ pip install -r requirements.txt
 
 ## Usage
 
+All scripts default to reading/writing from `/Volumes/adessler_lab/GHCND/monthly_data/`.
+
 ### 1. Download data
 
 ```bash
 # All North American stations (~30k stations, 4 directories)
-python scripts/download_data.py --out data/raw
+python scripts/download_data.py
 
 # Specific stations only
-python scripts/download_data.py --out data/raw --station-list my_stations.txt
+python scripts/download_data.py --station-list my_stations.txt
 ```
 
 ### 2. Build NetCDF
 
 ```bash
-python scripts/build_offsets_netcdf.py --raw-dir data/raw --out data/processed/monthly_offsets.nc
+python scripts/build_offsets_netcdf.py
 ```
 
 ### 3. Plot mean annual offsets
 
 ```bash
-python scripts/plot_mean_annual_offsets.py --nc data/processed/monthly_offsets.nc --out mean_annual_offsets.png
+python scripts/plot_mean_annual_offsets.py --out mean_annual_offsets.png
 ```
 
 ## Tests
@@ -71,17 +73,17 @@ python -m pytest tests/ -v
 
 ```
 scripts/
-  download_data.py          # Download North American monthly files
-  build_offsets_netcdf.py   # Compute offsets and write NetCDF
+  download_data.py            # Download North American monthly files
+  build_offsets_netcdf.py     # Compute offsets and write NetCDF
   plot_mean_annual_offsets.py # Plot mean annual offsets over all stations
-  parsers.py                # North American fixed-width parser
+  parsers.py                  # North American fixed-width parser
 
 tests/
-  test_parsers.py         # Unit tests for parser, conversions, offset logic
+  test_parsers.py             # Unit tests for parser, conversions, offset logic
 
-data/
-  raw/northam/            # Downloaded per-station monthly files
+/Volumes/adessler_lab/GHCND/monthly_data/
+  raw/northam/                # Downloaded per-station monthly files
   processed/
-    monthly_offsets.nc    # Output NetCDF
-    provenance.json       # Download timestamps and URLs
+    monthly_offsets.nc        # Output NetCDF
+    provenance.json           # Download timestamps and URLs
 ```
