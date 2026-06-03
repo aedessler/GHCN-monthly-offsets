@@ -2,6 +2,8 @@
 
 This pipeline downloads North American monthly station temperature data from NOAA/NCEI and computes monthly adjustment offsets (FLs.52j homogenized minus raw) for TMAX and TMIN, stored in a NetCDF file.
 
+![Mean annual offsets](mean_annual_offsets.png)
+
 ## Output
 
 `data/processed/monthly_offsets.nc` — a NetCDF file with dimensions `(station, time)`:
@@ -53,6 +55,12 @@ python scripts/download_data.py --out data/raw --station-list my_stations.txt
 python scripts/build_offsets_netcdf.py --raw-dir data/raw --out data/processed/monthly_offsets.nc
 ```
 
+### 3. Plot mean annual offsets
+
+```bash
+python scripts/plot_mean_annual_offsets.py --nc data/processed/monthly_offsets.nc --out mean_annual_offsets.png
+```
+
 ## Tests
 
 ```bash
@@ -63,9 +71,10 @@ python -m pytest tests/ -v
 
 ```
 scripts/
-  download_data.py        # Download North American monthly files
-  build_offsets_netcdf.py # Compute offsets and write NetCDF
-  parsers.py              # North American fixed-width parser
+  download_data.py          # Download North American monthly files
+  build_offsets_netcdf.py   # Compute offsets and write NetCDF
+  plot_mean_annual_offsets.py # Plot mean annual offsets over all stations
+  parsers.py                # North American fixed-width parser
 
 tests/
   test_parsers.py         # Unit tests for parser, conversions, offset logic
